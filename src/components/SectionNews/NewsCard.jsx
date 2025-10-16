@@ -1,30 +1,10 @@
 import { Box, Typography } from "@mui/material";
-import imageOne from './../../assets/images/home_page/news/image_one.jpg';
-import imageTwo from './../../assets/images/home_page/news/image_two.jpg';
+import { newsCard } from "../../data/newsCard";
 import PersonIcon from "@mui/icons-material/Person";
 import * as fonts from "../../assets/fonts/fonts"; 
 import YellowBtn from "../common/YellowBtn";
 
 export default function NewsCard() {
-  const cards = [
-    {
-      image: imageOne,
-      title: "The Benefits of Vitamin D & How to Get It",
-      author: "By Rachi Card",
-      date: "25",
-      month: "Nov",
-      text: "Vitamin D plays a key role in keeping your bones strong and your immune system healthy. You can get it naturally from sunlight, eggs, and fortified organic foods."
-    },
-    {
-      image: imageTwo,
-      title: "Our Favourite Summertime Tommeto",
-      author: "By Rachi Card",
-      date: "25",
-      month: "Nov",
-      text: "Juicy, sweet, and full of nutrients — tomatoes are the heart of summer! Discover how to pick, store, and cook them for the best natural flavor."
-    }
-  ];
-
   return (
     <Box
       sx={{
@@ -36,7 +16,7 @@ export default function NewsCard() {
         gap: { xs: '30px', md: '30px' }
       }}
     >
-      {cards.map((card, index) => (
+      {newsCard.map((card, index) => (
         <Box
           key={index}
           sx={{

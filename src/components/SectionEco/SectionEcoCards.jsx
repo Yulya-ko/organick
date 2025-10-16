@@ -1,16 +1,8 @@
 import { Box, Typography } from "@mui/material";
-import imgJuice from "./../../assets/images/home_page/ecoFriendly/img-juice.jpg";
-import imgFood from "./../../assets/images/home_page/ecoFriendly/img-food.jpg";
-import imgCookies from "./../../assets/images/home_page/ecoFriendly/img-cookies.jpg";
+import { sectionEcoCards } from "../../data/sectionEcoCards";
 import * as fonts from "../../assets/fonts/fonts"; 
 
 export default function SectionEcoCards() {
-  const cards = [
-    { image: imgJuice, text: "Organic Juice"},
-    { image: imgFood, text: "Organic Food"},
-    { image: imgCookies, text: "Nuts Cookies"},
-  ];
-
   return (
     <Box
       sx={{
@@ -23,7 +15,7 @@ export default function SectionEcoCards() {
         padding: { xs: '80px 16px', md: '187px 0' }
       }}
     >
-      {cards.map((card, index) => (
+      {sectionEcoCards.map((card, index) => (
         <Box
           key={index}
           sx={{
