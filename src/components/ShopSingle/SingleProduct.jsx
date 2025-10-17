@@ -6,11 +6,14 @@ import Stars from "../../components/common/Stars";
 import QuantityInput from "./QuantityInput";
 import AddToCartBtn from "./AddToCartBtn";
 import { useState, useEffect } from "react";
+import { addItemToCart } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 export default function SingleProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState("1");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const found = products.find((p) => p.id === Number(id));
@@ -26,9 +29,9 @@ export default function SingleProduct() {
     );
   }
 
-  const handleAddToCart = () => {
-    console.log(`🛒 Додано в корзину ${quantity} товарів`);
-  };
+  // const handleAddToCart = () => {
+  //   console.log(`🛒 Додано в корзину ${quantity} товарів`);
+  // };
 
   return (
     <Box sx={{ maxWidth: 1400, mx: "auto", mt: { xs: 4, md: '133px' }, px: 2 }}>
@@ -96,7 +99,7 @@ export default function SingleProduct() {
               Quantity:
             </Typography>
               <QuantityInput quantity={quantity} setQuantity={setQuantity} />
-              <AddToCartBtn onAddToCart={handleAddToCart} />  
+              <AddToCartBtn onAddToCart={() => {dispatch(addItemToCart({product, quantity}))}} />  
           </Box>
         </Box>
       </Box>     

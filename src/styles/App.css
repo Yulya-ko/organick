@@ -1,3 +1,18 @@
 body {
     margin: 0 auto;
 }
+
+.categoryButton {
+  cursor: pointer;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.categoryButtonSelected {
+  background-color: #7EB693;
+}
+
+.categoryButton:hover {
+  background-color: #e0e0e0;
+}

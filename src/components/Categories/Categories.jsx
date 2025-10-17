@@ -4,7 +4,7 @@ import * as fonts from "../../assets/fonts/fonts";
 
 export default function Categories() {
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', pt: { xs: "50px", md: "176px" }, minHeight: "100vh" }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column',alignItems: 'center', pt: { xs: "50px", md: "176px" }, minHeight: "100vh" }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: { xs: '4px', md: '8px' }, px: { xs: 2, md: 0 }, pb: '20px' }}>
                 <Typography sx={{ ...fonts.yellowtailRegular36, fontSize: { xs: '30px', md: '36px' } }}>
                     Categories
@@ -20,7 +20,7 @@ export default function Categories() {
                     Our Products
                 </Typography>
             </Box>
-            <Box>
+            <Box sx={{maxWidth: '1600px'}}>
                 <Products />
             </Box>
         </Box>

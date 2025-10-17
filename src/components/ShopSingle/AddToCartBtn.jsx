@@ -2,7 +2,9 @@ import { Button } from "@mui/material";
 import ArrowButtonIcon from "../Icons/ArrowForwardIcon";
 import * as fonts from "../../assets/fonts/fonts";
 
+
 export default function AddToCartBtn({ onAddToCart }) {
+  
   return (
     <Button
       variant="contained"
