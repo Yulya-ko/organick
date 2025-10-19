@@ -7,30 +7,40 @@ export const cartSlice = createSlice({
   },
   reducers: {
     addItemToCart: (state, action) => {
-        const timeId = new Date().getTime()
+      const { product, quantity } = action.payload;
+      const existingItem = state.cartItems.find(item => item.productId === product.id);
+
+      if (existingItem) {
+        existingItem.quantity += quantity;
+        existingItem.totalPrice = existingItem.quantity * product.price;
+      } else {
+        const timeId = new Date().getTime();
         state.cartItems.push({
-            id: timeId,
-            productId: action.payload.product.id,
-            quantity:action.payload.quantity,
-            totalPrice: action.payload.quantity * action.payload.product.price,
-        })
+          id: timeId,
+          productId: product.id,
+          quantity,
+          totalPrice: quantity * product.price,
+        });
+      }
     },
     removeItemFromCart: (state, action) => {
-        state.cartItems = state.cartItems.filter(
-            cartItem => cartItem.id !== action.payload.cartItemId
-        )
+      state.cartItems = state.cartItems.filter(item => item.id !== action.payload.cartItemId);
+    },
+    updateQuantity: (state, action) => {
+      const { cartItemId, quantity, productPrice } = action.payload;
+      const item = state.cartItems.find(i => i.id === cartItemId);
+      if (item) {
+        item.quantity = quantity > 0 ? quantity : 1;
+        item.totalPrice = item.quantity * productPrice;
+      }
     }
-  },
+  }
+});
 
-})
-
-
-export const getTotalPrice = state => {
-    return state.cart.cartItems.reduce((total, cartItems) => {
-        return cartItems.totalPrice + total
-    }, 0)
-}
+export const { addItemToCart, removeItemFromCart, updateQuantity } = cartSlice.actions;
 
 export const getCartItems = state => state.cart.cartItems;
-export const {addItemToCart, removeItemFromCart} = cartSlice.actions;
+export const getTotalPrice = state =>
+  state.cart.cartItems.reduce((total, item) => total + item.totalPrice, 0);
+
 export default cartSlice.reducer;

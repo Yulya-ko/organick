@@ -15,6 +15,8 @@ import SearchIcon from "./../Icons/SearchIcon";
 import CartIcon from "./../Icons/CartIcon";
 import CartDrawer from "../SectionCart/CartDrawer";
 import MobileMenuDrawer from "./MobileMenuDrawer";
+import { useSelector } from "react-redux";
+import { getCartItems } from "../../redux/cartSlice";
 import "./Header.css";
 
 const navLinks = [
@@ -26,6 +28,9 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const cartItems = useSelector(getCartItems);
+  const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -90,7 +95,7 @@ export default function Header() {
           >
             <CartIcon sx={{ width: { xs: 24, md: 56 }, height: { xs: 24, md: 56 } }} className="cartIcon" />
             <Typography sx={{ ...fonts.robotoSemiBold18, display: { xs: "none", md: "block" } }}>
-              Cart (0)
+              Cart ({totalQuantity})
             </Typography>
           </Box>
 

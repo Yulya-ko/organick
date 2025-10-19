@@ -10,8 +10,8 @@ export default function ProductCard({ product, linkTo }) {
     <CardWrapper to={linkTo || ""} style={{ textDecoration: "none", color: "inherit" }}>
       <Card
         sx={{
-          width: { xs: "100%", sm: 300, md: 335 },
-          height: 450, 
+          width: { xs: "250px", sm: 300, md: 335 },
+          height: {xs: '350px', sm: '450px', md: '450px'}, 
           borderRadius: "30px",
           boxShadow: "none",
           transition: "transform 0.3s ease",

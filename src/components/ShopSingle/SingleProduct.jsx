@@ -1,24 +1,26 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Typography, CardMedia, Chip } from "@mui/material";
+import { Box, Typography, CardMedia, Chip, Snackbar, Alert } from "@mui/material";
+import { useDispatch } from "react-redux";
+
 import { products } from "../../data/products";
 import * as fonts from "../../assets/fonts/fonts";
 import Stars from "../../components/common/Stars";
-import QuantityInput from "./QuantityInput";
 import AddToCartBtn from "./AddToCartBtn";
-import { useState, useEffect } from "react";
+import ChangeQuantity from "./ChangeQuantity";
 import { addItemToCart } from "../../redux/cartSlice";
-import { useDispatch } from "react-redux";
 
 export default function SingleProduct() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [quantity, setQuantity] = useState("1");
+  const [quantity, setQuantity] = useState(1);
+  const [openSnackbar, setOpenSnackbar] = useState(false); 
   const dispatch = useDispatch();
 
   useEffect(() => {
     const found = products.find((p) => p.id === Number(id));
     setProduct(found);
-    setQuantity("1"); 
+    setQuantity(1);
   }, [id]);
 
   if (!product) {
@@ -29,14 +31,26 @@ export default function SingleProduct() {
     );
   }
 
-  // const handleAddToCart = () => {
-  //   console.log(`🛒 Додано в корзину ${quantity} товарів`);
-  // };
+  const handleAddToCart = () => {
+    if (quantity <= 0) {
+      setOpenSnackbar(true); 
+      return;
+    }
+    dispatch(addItemToCart({ product, quantity }));
+  };
 
   return (
-    <Box sx={{ maxWidth: 1400, mx: "auto", mt: { xs: 4, md: '133px' }, px: 2 }}>
-      <Box sx={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', flexDirection: { xs: "column", md: "row" }, gap: '83px' }}>
-        
+    <Box sx={{ maxWidth: 1400, mx: "auto", mt: { xs: 4, md: "133px" }, px: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexDirection: { xs: "column", md: "row" },
+          gap: "83px",
+        }}
+      >
+        {/* --- Зображення --- */}
         <Box sx={{ position: "relative", display: "inline-block" }}>
           <Chip
             label={product.category}
@@ -67,42 +81,78 @@ export default function SingleProduct() {
               backgroundColor: "#f9f8f8",
               p: { xs: 2, md: 3 },
               zIndex: 3,
-              boxShadow: "0px 8px 20px rgba(0,0,0,0.1)"
+              boxShadow: "0px 8px 20px rgba(0,0,0,0.1)",
             }}
           />
         </Box>
 
-        <Box sx={{ flex: 1, maxWidth: "658px", textAlign: {xs: 'center', md: 'start'} }}>
-          <Typography variant="h4" sx={{ ...fonts.robotoExtraBold40, fontSize: {xs: "30px", md: "40px"} }}>
+        <Box sx={{ flex: 1, maxWidth: "658px", textAlign: { xs: "center", md: "start" } }}>
+          <Typography
+            variant="h4"
+            sx={{
+              ...fonts.robotoExtraBold40,
+              fontSize: { xs: "30px", md: "40px" },
+            }}
+          >
             {product.name}
           </Typography>
 
-            <Box sx={{ display: 'flex', justifyContent: {xs: 'center', md: 'flex-start'}}}>
-                <Stars />
+          <Box sx={{ display: "flex", justifyContent: { xs: "center", md: "flex-start" } }}>
+            <Stars />
           </Box>
 
-          <Box sx={{ display: "flex", alignItems: "center", justifyContent: {xs: 'center', md: 'flex-start'}, gap: 1, mb: '27px', mt: '9px' }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: { xs: "center", md: "flex-start" },
+              gap: 1,
+              mb: "27px",
+              mt: "9px",
+            }}
+          >
             <Typography sx={{ textDecoration: "line-through", ...fonts.openSansSemiBold20 }}>
               ${product.oldPrice.toFixed(2)}
             </Typography>
-            <Typography sx={{ fontSize: "24px", color: "#274C5B", fontWeight: "bold", ...fonts.openSansBold25 }}>
+            <Typography
+              sx={{
+                fontSize: "24px",
+                color: "#274C5B",
+                fontWeight: "bold",
+                ...fonts.openSansBold25,
+              }}
+            >
               ${product.price.toFixed(2)}
             </Typography>
           </Box>
-            
+
           <Typography variant="body1" sx={{ mt: 3, mb: "35px", ...fonts.openSansRegular18 }}>
             {product.description}
           </Typography>
 
-          <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', gap: '20px'}}>
-            <Typography sx={{ ...fonts.robotoBold20 }}>
-              Quantity:
-            </Typography>
-              <QuantityInput quantity={quantity} setQuantity={setQuantity} />
-              <AddToCartBtn onAddToCart={() => {dispatch(addItemToCart({product, quantity}))}} />  
+          <Box sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "20px" }}>
+            <Typography sx={{ ...fonts.robotoBold20 }}>Quantity:</Typography>
+
+            <ChangeQuantity quantity={quantity} setQuantity={setQuantity} />
+
+            <AddToCartBtn
+              disabled={quantity <= 0} 
+              onAddToCart={handleAddToCart}
+            />
           </Box>
         </Box>
-      </Box>     
+      </Box>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={() => setOpenSnackbar(false)} severity="warning" sx={{ width: "100%" }}>
+          Please enter a quantity greater than 0!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 }

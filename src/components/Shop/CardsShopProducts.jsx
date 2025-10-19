@@ -9,7 +9,7 @@ import { getSelectedCategory } from "../../redux/foodSlice";
 
 export default function CardsShopProducts() {
   const selectedCategory = useSelector(getSelectedCategory);
-  
+
   return (
     <Box sx={{
         maxWidth: "1600px",
@@ -28,7 +28,7 @@ export default function CardsShopProducts() {
         </Typography>
       </Box>
       <Box sx={{ maxWidth: '1400px', mb: {xs: '30px', md: '80px'}}}>
-        <AllCategories/>
+        <AllCategories />
       </Box>
       
       <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center" sx={{ mb: { xs: '60px', md: '122px' } }}>

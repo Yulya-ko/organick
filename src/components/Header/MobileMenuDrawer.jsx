@@ -16,15 +16,14 @@ export default function MobileMenuDrawer({ open, onClose, toggleCartDrawer }) {
   return (
     <Drawer anchor="right" open={open} onClose={onClose} PaperProps={{ sx: { width: "100%", bgcolor: "#f0f5f0" } }}>
       <Box sx={{ display: "flex", flexDirection: "column", height: "100%", p: 3 }}>
-        {/* Верхний блок: логотип + корзина + закрытие */}
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 4, pt: "20px" }}>
           <Link to="/" style={{ display: "flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
             <Typography sx={{ ...fonts.robotoBold25 }}>Organick</Typography>
           </Link>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} onClick={toggleCartDrawer(true)}>
-            <CartIcon sx={{ width: 30, height: 30 }} />
-            <Typography sx={{ ...fonts.robotoSemiBold18 }}>Cart (0)</Typography>
+            <CartIcon sx={{ width: 30, height: 30 }} className="cartIcon" />
+            <Typography sx={{ ...fonts.robotoSemiBold18 }}>Cart</Typography>
           </Box>
 
           <IconButton onClick={onClose}>
@@ -32,7 +31,6 @@ export default function MobileMenuDrawer({ open, onClose, toggleCartDrawer }) {
           </IconButton>
         </Box>
 
-        {/* Список ссылок */}
         <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column", alignItems: "center", pt: "30px" }}>
           <List sx={{ textAlign: "center" }}>
             {navLinks.map(({ label, path }) => (
