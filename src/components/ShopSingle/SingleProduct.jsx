@@ -126,11 +126,11 @@ export default function SingleProduct() {
             </Typography>
           </Box>
 
-          <Typography variant="body1" sx={{ mt: 3, mb: "35px", ...fonts.openSansRegular18 }}>
+          <Typography variant="body1" sx={{ mt: 3, mb: "35px", ...fonts.openSansRegular18, padding: {xs: '10px', md: 0} }}>
             {product.description}
           </Typography>
 
-          <Box sx={{ display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "20px" }}>
+          <Box sx={{ display: "flex", flexDirection: {xs: 'column', md: 'row'}, justifyContent: "flex-start", alignItems: "center", gap: "20px" }}>
             <Typography sx={{ ...fonts.robotoBold20 }}>Quantity:</Typography>
 
             <ChangeQuantity quantity={quantity} setQuantity={setQuantity} />
